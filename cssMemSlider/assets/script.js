@@ -12,6 +12,17 @@ const sliderPaginationBoxes = Array.from(Array(sliderSlides.length), (_, idx) =>
 );
 const slideCopies = [];
 
+sliderContainer.addEventListener('click', (e) => {
+  const { offsetX } = e;
+  const { width } = e.target;
+  const limX = width * 0.3;
+  if (offsetX > width - limX) {
+    moveSlides(1);
+  } else if (offsetX < limX) {
+    moveSlides(-1);
+  }
+});
+
 function createPaginationBox(idx) {
   const paginationBox = document.createElement('div');
   paginationBox.classList.add('slider__pagination-box');
@@ -83,14 +94,14 @@ function slide() {
 
   curCaption?.animate(
     { left: '0' },
-    { duration: 500, easing: 'ease', fill: 'forwards' }
+    { duration: 300, easing: 'ease', fill: 'forwards' }
   );
   prevCaption?.animate(
     {
       left: isLeft ? `-${captionWidth}px` : `${curCaption.offsetWidth}px`,
       opacity: 0,
     },
-    { duration: 500, easing: 'ease', fill: 'forwards' }
+    { duration: 300, easing: 'ease', fill: 'forwards' }
   );
   curSlide.animate(
     { left: 0 },
@@ -100,6 +111,15 @@ function slide() {
     { left: isLeft ? '-100%' : '100%' },
     { duration: 500, easing: 'ease' }
   );
+}
+
+function moveSlides(step) {
+  prevSlideIndex = curSlideIndex;
+  curSlideIndex = Math.min(
+    sliderSlides.length,
+    Math.max(0, curSlideIndex + step)
+  );
+  slideAndPaginate();
 }
 
 function slideAndPaginate() {

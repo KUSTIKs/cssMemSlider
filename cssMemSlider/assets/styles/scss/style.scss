@@ -39,7 +39,7 @@ body {
 
   &__slide-caption {
     flex-grow: 1;
-    font-size: 1.75rem;
+    font-size: clamp(1rem, 4.5vw, 1.75rem);
     font-weight: 600;
     color: lightgray;
     height: 1.5em;
@@ -48,6 +48,9 @@ body {
       position: absolute;
       padding-right: 1ch;
       left: 0;
+      @media (max-width: 450px) {
+        transform: translateX(-50%);
+      }
     }
   }
 
@@ -60,9 +63,7 @@ body {
   }
 
   &__slide-image {
-    position: absolute;
     display: block;
-    inset: 0;
     height: 100%;
     width: 100%;
     object-fit: cover;
@@ -77,12 +78,6 @@ body {
     overflow: hidden;
     @media (max-width: 450px) {
       flex-direction: column;
-      .slider__slide-caption {
-        font-size: 1.4rem;
-        p {
-          transform: translateX(-50%);
-        }
-      }
     }
   }
 
